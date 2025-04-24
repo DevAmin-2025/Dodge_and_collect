@@ -1,4 +1,4 @@
-from random import randint
+import random
 
 import pygame
 
@@ -42,10 +42,10 @@ class DodgeAndCollect:
         self.game_over = False
         self.player_x = (screen_width // 2) - (player_width // 2)
         self.player_y = screen_height - (player_height + 5)
-        self.coin_x = randint(coin_radius, (screen_width - coin_radius))
+        self.coin_x = random.randint(coin_radius, (screen_width - coin_radius))
         self.coin_y = -coin_radius
         self.coin_speed = coin_speed
-        self.obstacle_x = randint(0, (screen_width - obstacle_width))
+        self.obstacle_x = random.randint(0, (screen_width - obstacle_width))
         self.obstacle_y = -obstacle_height
         self.obstacle_speed = obstacle_speed
 
@@ -69,11 +69,11 @@ class DodgeAndCollect:
                     self.player_x = (screen_width // 2) - (player_width // 2)
                     self.player_y = screen_height - (player_height + 5)
                     # Reinitialize coin object
-                    self.coin_x = randint(coin_radius, (screen_width - coin_radius))
+                    self.coin_x = random.randint(coin_radius, (screen_width - coin_radius))
                     self.coin_y = -coin_radius
                     self.coin_speed = 4
                     # Reinitialize obstacle object
-                    self.obstacle_x = randint(0, (screen_width - obstacle_width))
+                    self.obstacle_x = random.randint(0, (screen_width - obstacle_width))
                     self.obstacle_y = -obstacle_height
                     self.obstacle_speed = 3
                     # Reset the score to zero
@@ -124,13 +124,13 @@ class DodgeAndCollect:
         """
         if self.obstacle_y > screen_height:
             # Reinitialize obstacle object
-            self.obstacle_x = randint(0, (screen_width - obstacle_width))
+            self.obstacle_x = random.randint(0, (screen_width - obstacle_width))
             self.obstacle_y = -obstacle_height
             self.obstacle_speed += obstacle_speed_increase
 
         if self.coin_y > screen_height:
             # Reinitialize coin object
-            self.coin_x = randint(coin_radius, (screen_width - coin_radius))
+            self.coin_x = random.randint(coin_radius, (screen_width - coin_radius))
             self.coin_y = -coin_radius
             self.coin_speed += coin_speed_increase
 
@@ -184,7 +184,7 @@ class DodgeAndCollect:
         ):
             self.score += 10
             # Reinitialize coin object
-            self.coin_x = randint(coin_radius, (screen_width - coin_radius))
+            self.coin_x = random.randint(coin_radius, (screen_width - coin_radius))
             self.coin_y = -coin_radius
             self.coin_speed += coin_speed_increase
 
@@ -198,9 +198,9 @@ class DodgeAndCollect:
         :return: None
         """
         if self.dark_mode:
-            self.screen.fill('black')
+            self.screen.fill('#212121')
         else:
-            self.screen.fill('white')
+            self.screen.fill('#F5F5F5')
 
     def display_game_over(self):
         """
@@ -216,7 +216,7 @@ class DodgeAndCollect:
             game_over_text,
             (screen_width // 2 - game_over_text.get_width() // 2, screen_height // 2 - game_over_text.get_height())
         )
-        restart_text = self.normal_font.render('Enter press to restart', True, '#BDBDBD')
+        restart_text = self.normal_font.render('Press Enter to restart', True, '#BDBDBD')
         self.screen.blit(
             restart_text,
             (screen_width // 2 - restart_text.get_width() // 2, screen_height // 2 + 20)
@@ -225,6 +225,24 @@ class DodgeAndCollect:
         self.screen.blit(
             final_score_text,
             (screen_width // 2 - final_score_text.get_width() // 2, screen_height // 2 + 85)
+        )
+
+    def draw_objects(self):
+        pygame.draw.rect(
+            self.screen,
+            obstacle_color,
+            (self.obstacle_x, self.obstacle_y, obstacle_width, obstacle_height)
+        )
+        pygame.draw.rect(
+            self.screen,
+            player_color,
+            (self.player_x, self.player_y, player_width, player_height)
+        )
+        pygame.draw.circle(
+            self.screen,
+            coin_color,
+            (self.coin_x, self.coin_y),
+            coin_radius
         )
 
     def run_game_loop(self):
@@ -248,23 +266,7 @@ class DodgeAndCollect:
                 self.handle_collisions()
                 self.refresh_screen()
                 if not self.game_over:
-                    # Draw the objects on the screen
-                    pygame.draw.rect(
-                        self.screen,
-                        obstacle_color,
-                        (self.obstacle_x, self.obstacle_y, obstacle_width, obstacle_height)
-                    )
-                    pygame.draw.rect(
-                        self.screen,
-                        player_color,
-                        (self.player_x, self.player_y, player_width, player_height)
-                    )
-                    pygame.draw.circle(
-                        self.screen,
-                        coin_color,
-                        (self.coin_x, self.coin_y),
-                        coin_radius
-                    )
+                    self.draw_objects()
                     # display updated state of the score
                     score_text = self.normal_font.render(f'Score: {self.score}', True, '#BDBDBD')
                     self.screen.blit(score_text, (10, 10))
