@@ -25,7 +25,8 @@ dodge-and-collect/
 │   └── Archivo-Bold.ttf
 ├── .gitignore
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── LICENSE
 ```
 ### Customize Configuration
 Make sure the file src/vars.py contains all the required configuration variables such as `screen_width`, `screen_height`, `player_width`, `player_height`, `coin_radius`, `obstacle_width`, `obstacle_height`, `coin_speed`, `obstacle_speed`, `coin_speed_increase`, `obstacle_speed_increase`, and any color values (e.g., `player_color`, `obstacle_color`, `coin_color`).
