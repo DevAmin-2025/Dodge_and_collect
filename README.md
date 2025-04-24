@@ -31,15 +31,22 @@ dodge-and-collect/
 Make sure the file src/vars.py contains all the required configuration variables such as `screen_width`, `screen_height`, `player_width`, `player_height`, `coin_radius`, `obstacle_width`, `obstacle_height`, `coin_speed`, `obstacle_speed`, `coin_speed_increase`, `obstacle_speed_increase`, and any color values (e.g., `player_color`, `obstacle_color`, `coin_color`).
 
 ## How to Run
-1. Move to the main project directory and add the current directory to `PYTHONPATH`.
+1. **Clone the Repository**: Open your terminal and run the following command to clone the repository:
+    ```bash
+    git clone https://github.com/your-username/your-repo.git
+    ```
+    Replace `your-username` and `your-repo` with the actual GitHub username and repository name.
+
+2. Move to the main project directory and add the current directory to `PYTHONPATH`.
 
     ```bash
+    cd Dodge_and_collect
     export PYTHONPATH=$PYTHONPATH:$(pwd)
     ```
 2. Install necessary requirements.
 
     ```bash
-    pip install requirements.txt
+    pip install -r requirements.txt
     ```
 3. Run the main script.
 
